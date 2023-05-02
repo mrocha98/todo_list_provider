@@ -33,3 +33,6 @@ flutter:
       fonts:
         - asset: assets/fonts/mandali-v14-latin-regular.ttf
           style: normal
+    - family: CustomIcons
+      fonts:
+        - asset: assets/fonts/CustomIcons.ttf

@@ -33,9 +33,23 @@ class LoginPage extends StatelessWidget {
                         child: Form(
                           child: Column(
                             children: [
-                              TextFormField(),
+                              CustomInput(
+                                label: 'E-mail',
+                                keyboardType: TextInputType.emailAddress,
+                                textInputAction: TextInputAction.next,
+                                onChanged: (value) {},
+                              ),
                               const SizedBox(height: 20),
-                              TextFormField(),
+                              CustomInput(
+                                label: 'Senha',
+                                obscureText: true,
+                                keyboardType: TextInputType.visiblePassword,
+                                textInputAction: TextInputAction.done,
+                                onChanged: (value) {},
+                                onEditingComplete: () {
+                                  FocusScope.of(context).unfocus();
+                                },
+                              ),
                               const SizedBox(height: 20),
                               Row(
                                 mainAxisAlignment:
