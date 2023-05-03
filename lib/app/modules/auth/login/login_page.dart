@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:sign_in_button/sign_in_button.dart';
 import 'package:todo_list_provider/app/core/widgets/widgets.dart';
+import 'package:todo_list_provider/app/modules/auth/register/register_page.dart';
 
 class LoginPage extends StatelessWidget {
   const LoginPage({super.key});
@@ -108,7 +109,8 @@ class LoginPage extends StatelessWidget {
                                 children: [
                                   const Text('Não tem conta?'),
                                   TextButton(
-                                    onPressed: () {},
+                                    onPressed: () => Navigator.of(context)
+                                        .pushNamed(RegisterPage.routeName),
                                     child: const Text('Cadastre-se'),
                                   ),
                                 ],
