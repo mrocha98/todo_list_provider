@@ -14,7 +14,9 @@ class AuthModule extends Module {
           },
           bindings: [
             ChangeNotifierProvider(
-              create: (context) => LoginController(),
+              create: (context) => LoginController(
+                context.read(),
+              ),
             ),
             ChangeNotifierProvider(
               create: (context) => RegisterController(

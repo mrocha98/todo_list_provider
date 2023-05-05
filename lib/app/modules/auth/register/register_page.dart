@@ -119,7 +119,6 @@ class _RegisterPageState extends State<RegisterPage> {
                   CustomInput(
                     label: 'E-mail',
                     controller: _emailEC,
-                    onChanged: (value) {},
                     keyboardType: TextInputType.emailAddress,
                     textInputAction: TextInputAction.next,
                     validator: Validatorless.multiple([
@@ -134,7 +133,6 @@ class _RegisterPageState extends State<RegisterPage> {
                     keyboardType: TextInputType.visiblePassword,
                     textInputAction: TextInputAction.next,
                     obscureText: true,
-                    onChanged: (value) {},
                     validator: Validatorless.multiple([
                       Validatorless.required('Senha obrigatória'),
                       Validatorless.min(
@@ -150,7 +148,6 @@ class _RegisterPageState extends State<RegisterPage> {
                     keyboardType: TextInputType.visiblePassword,
                     textInputAction: TextInputAction.done,
                     obscureText: true,
-                    onChanged: (value) {},
                     onEditingComplete: () {
                       FocusScope.of(context).unfocus();
                       _submit();
