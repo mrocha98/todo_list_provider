@@ -14,10 +14,12 @@ class AuthModule extends Module {
           },
           bindings: [
             ChangeNotifierProvider(
-              create: (_) => LoginController(),
+              create: (context) => LoginController(),
             ),
             ChangeNotifierProvider(
-              create: (_) => RegisterController(),
+              create: (context) => RegisterController(
+                context.read(),
+              ),
             ),
           ],
         );

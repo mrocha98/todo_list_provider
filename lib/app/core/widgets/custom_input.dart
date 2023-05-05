@@ -92,11 +92,14 @@ class _CustomInputState extends State<CustomInput> {
           isDense: true,
           suffixIcon: widget.suffixIcon ??
               (widget.obscureText
-                  ? IconButton(
-                      onPressed: () => _obscureTextVN.value = !obscureTextValue,
-                      icon: obscureTextValue
-                          ? const Icon(CustomIcons.eye)
-                          : const Icon(CustomIcons.eyeSlash),
+                  ? ExcludeFocus(
+                      child: IconButton(
+                        onPressed: () =>
+                            _obscureTextVN.value = !obscureTextValue,
+                        icon: obscureTextValue
+                            ? const Icon(CustomIcons.eye)
+                            : const Icon(CustomIcons.eyeSlash),
+                      ),
                     )
                   : null),
         ),
