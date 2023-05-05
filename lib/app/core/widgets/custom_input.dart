@@ -19,6 +19,7 @@ class CustomInput extends StatefulWidget {
     this.onFieldSubmitted,
     this.readOnly = false,
     this.textInputAction,
+    this.focusNode,
   }) : assert(
           (obscureText && suffixIcon == null) || !obscureText,
           'cannot have a suffixIcon and obscure text at same time',
@@ -51,6 +52,8 @@ class CustomInput extends StatefulWidget {
   final bool readOnly;
 
   final TextInputAction? textInputAction;
+
+  final FocusNode? focusNode;
 
   @override
   State<CustomInput> createState() => _CustomInputState();
@@ -115,6 +118,7 @@ class _CustomInputState extends State<CustomInput> {
         onFieldSubmitted: widget.onFieldSubmitted,
         readOnly: widget.readOnly,
         textInputAction: widget.textInputAction,
+        focusNode: widget.focusNode,
       ),
     );
   }

@@ -24,4 +24,19 @@ class LoginController extends DefaultChangeNotifier {
       notifyListeners();
     }
   }
+
+  Future<void> forgotPassword(String email) async {
+    showLoadingAndResetState();
+    notifyListeners();
+
+    try {
+      await _userService.forgotPassword(email);
+      info = 'Confira seu email para redefinir sua senha';
+    } on AuthException catch (e) {
+      error = e.message;
+    } finally {
+      hideLoading();
+      notifyListeners();
+    }
+  }
 }

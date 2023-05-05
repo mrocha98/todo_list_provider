@@ -13,6 +13,10 @@ class DefaultChangeNotifier extends ChangeNotifier {
 
   bool get isSuccess => _success;
 
+  String? info;
+
+  bool get hasInfo => info != null;
+
   void showLoading() => _loading = true;
 
   void hideLoading() => _loading = false;
@@ -22,6 +26,7 @@ class DefaultChangeNotifier extends ChangeNotifier {
   void resetState() {
     _success = false;
     error = null;
+    info = null;
   }
 
   void showLoadingAndResetState() {

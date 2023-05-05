@@ -11,11 +11,14 @@ class DefaultListenerNotifier {
 
   void listen(
     BuildContext context, {
-    SuccessVoidCallback? onSuccess,
+    ListenVoidCallback? onListen,
     ErrorVoidCallback? onError,
+    SuccessVoidCallback? onSuccess,
     VoidCallback? dispose,
   }) =>
       _notifier.addListener(() {
+        onListen?.call(_notifier, this);
+
         if (_notifier.loading) {
           Loader.show(context);
         } else {
@@ -38,6 +41,11 @@ typedef SuccessVoidCallback = void Function(
 );
 
 typedef ErrorVoidCallback = void Function(
+  DefaultChangeNotifier notifier,
+  DefaultListenerNotifier listenerNotifier,
+);
+
+typedef ListenVoidCallback = void Function(
   DefaultChangeNotifier notifier,
   DefaultListenerNotifier listenerNotifier,
 );
