@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:todo_list_provider/app/core/database/sqlite_connection_observer.dart';
+import 'package:todo_list_provider/app/core/navigator/custom_navigator.dart';
 import 'package:todo_list_provider/app/core/ui/ui_config.dart';
 import 'package:todo_list_provider/app/modules/auth/auth_module.dart';
+import 'package:todo_list_provider/app/modules/home/home_module.dart';
 import 'package:todo_list_provider/app/modules/splash/splash_page.dart';
 
 class AppWidget extends StatefulWidget {
@@ -32,8 +34,10 @@ class _AppWidgetState extends State<AppWidget> {
       title: 'Todo List Provider',
       debugShowCheckedModeBanner: false,
       theme: UiConfig.theme,
+      navigatorKey: CustomNavigator.navigatorKey,
       routes: {
         ...AuthModule().routes,
+        ...HomeModule().routes,
       },
       home: const SplashPage(),
     );

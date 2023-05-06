@@ -38,9 +38,6 @@ class _LoginPageState extends State<LoginPage> {
           Messages.of(context).showInfo(notifier.info!);
         }
       },
-      onSuccess: (_, __) {
-        // TODO : implement redirect to home
-      },
     );
   }
 
