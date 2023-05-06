@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/services.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:todo_list_provider/app/exceptions/exceptions.dart';
 
 import 'package:todo_list_provider/app/repositories/user/user_repository.dart';
@@ -82,4 +83,54 @@ class UserRepositoryImpl implements UserRepository {
       throw AuthException(message: 'Email inválido');
     }
   }
+
+  @override
+  Future<User?> googleLogin() async {
+    var loginMethods = <String>[];
+    try {
+      final googleSignIn = GoogleSignIn();
+      final googleUser = await googleSignIn.signIn();
+      if (googleUser != null) {
+        loginMethods = await _firebaseAuth.fetchSignInMethodsForEmail(
+          googleUser.email,
+        );
+        if (loginMethods.contains('password')) {
+          throw AuthException(message: 'Conta já cadastrada com e-mail');
+        } else {
+          final googleAuth = await googleUser.authentication;
+          final firebaseCredential = GoogleAuthProvider.credential(
+            accessToken: googleAuth.accessToken,
+            idToken: googleAuth.idToken,
+          );
+          final userCredential = await _firebaseAuth.signInWithCredential(
+            firebaseCredential,
+          );
+          return userCredential.user;
+        }
+      }
+    } on FirebaseAuthException catch (e, st) {
+      log(
+        'UserRepositoryImpl.googleLogin firebase auth exception',
+        error: e,
+        stackTrace: st,
+      );
+      if (e.code == 'account-exists-with-different-credential') {
+        throw AuthException(
+          message: loginMethods.isEmpty
+              ? 'Você já se registrou utilizando outro serviço'
+              : 'Você já se registrou com os seguintes serviços:\n'
+                  '${loginMethods.join(', ')}',
+        );
+      } else {
+        throw AuthException(message: 'Erro ao registrar com Google');
+      }
+    }
+    return null;
+  }
+
+  @override
+  Future<void> googleLogout() async => Future.wait([
+        GoogleSignIn().signOut(),
+        _firebaseAuth.signOut(),
+      ]);
 }

@@ -26,6 +26,8 @@ class _LoginPageState extends State<LoginPage> {
 
   final _emailFocus = FocusNode();
 
+  void _handleGoogleLogin() => context.read<LoginController>().googleLogin();
+
   @override
   void initState() {
     super.initState();
@@ -169,7 +171,7 @@ class _LoginPageState extends State<LoginPage> {
                               Container(),
                               SignInButton(
                                 Buttons.google,
-                                onPressed: () {},
+                                onPressed: _handleGoogleLogin,
                                 text: 'Continue com o Google',
                                 padding: const EdgeInsets.all(5),
                                 shape: OutlineInputBorder(
