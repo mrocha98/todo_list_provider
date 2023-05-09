@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:todo_list_provider/app/core/database/sqlite_connection_observer.dart';
 import 'package:todo_list_provider/app/core/navigator/custom_navigator.dart';
 import 'package:todo_list_provider/app/core/ui/ui_config.dart';
@@ -35,6 +36,14 @@ class _AppWidgetState extends State<AppWidget> {
       title: 'Todo List Provider',
       debugShowCheckedModeBanner: false,
       theme: UiConfig.theme,
+      localizationsDelegates: const [
+        GlobalMaterialLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+      ],
+      supportedLocales: const [
+        Locale('pt', 'BR'),
+      ],
       navigatorKey: CustomNavigator.navigatorKey,
       routes: {
         ...AuthModule().routes,

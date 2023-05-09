@@ -9,6 +9,8 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  flutter_localizations:
+    sdk: flutter
   cupertino_icons: ^1.0.2
   provider: ^6.0.5
   sqflite: ^2.2.7
@@ -21,6 +23,7 @@ dependencies:
   flutter_overlay_loader: ^2.0.0
   google_sign_in: ^6.1.0
   date_picker_timeline: ^1.2.3
+  intl: ^0.17.0
 
 dev_dependencies:
   flutter_test:

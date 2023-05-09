@@ -17,5 +17,6 @@ class UiConfig {
             backgroundColor: _primaryColor,
           ),
         ),
+        colorScheme: ColorScheme.fromSeed(seedColor: _primaryColor),
       );
 }
