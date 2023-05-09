@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:todo_list_provider/app/core/ui/custom_icons_icons.dart';
+import 'package:todo_list_provider/app/core/ui/custom_icons.dart';
 
 class CustomInput extends StatefulWidget {
   const CustomInput({
