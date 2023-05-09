@@ -22,4 +22,15 @@ abstract class Module {
           ),
         ),
       );
+
+  Widget getPage(BuildContext context, {required String routeName}) {
+    final widgetBuilder = _routes[routeName];
+    if (widgetBuilder != null) {
+      return ModulePage(
+        builder: widgetBuilder,
+        bindings: _bindings,
+      );
+    }
+    throw ArgumentError.value(routeName);
+  }
 }
