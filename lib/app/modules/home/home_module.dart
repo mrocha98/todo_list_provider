@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:provider/provider.dart';
 import 'package:todo_list_provider/app/core/database/sqlite_connection_factory.dart';
 import 'package:todo_list_provider/app/core/modules/module.dart';
@@ -21,6 +22,7 @@ class HomeModule extends Module {
             Provider<TasksService>(
               create: (context) => TasksServiceImpl(
                 context.read<TasksRepository>(),
+                context.read<FirebaseAuth>(),
               ),
             ),
             ChangeNotifierProvider(

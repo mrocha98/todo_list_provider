@@ -7,6 +7,7 @@ class TaskModel {
     required this.description,
     required this.dateTime,
     required this.finished,
+    this.userId,
   });
 
   factory TaskModel.fromSqlite(Map<String, dynamic> data) {
@@ -15,6 +16,7 @@ class TaskModel {
       description: data['descricao'] as String,
       dateTime: DateTime.parse(data['data_hora'] as String),
       finished: data['finalizado'] as int > 0,
+      userId: data['user_id'] as String?,
     );
   }
 
@@ -26,6 +28,8 @@ class TaskModel {
 
   final bool finished;
 
+  final String? userId;
+
   @override
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
@@ -34,7 +38,8 @@ class TaskModel {
         other.id == id &&
         other.description == description &&
         other.dateTime == dateTime &&
-        other.finished == finished;
+        other.finished == finished &&
+        other.userId == userId;
   }
 
   @override
@@ -42,7 +47,8 @@ class TaskModel {
     return id.hashCode ^
         description.hashCode ^
         dateTime.hashCode ^
-        finished.hashCode;
+        finished.hashCode ^
+        userId.hashCode;
   }
 
   @override
@@ -51,7 +57,8 @@ class TaskModel {
         'id: $id, '
         'description: $description, '
         'dateTime: $dateTime, '
-        'finished: $finished'
+        'finished: $finished, '
+        'userId: $userId'
         ')';
   }
 
@@ -60,12 +67,14 @@ class TaskModel {
     String? description,
     DateTime? dateTime,
     bool? finished,
+    String? userId,
   }) {
     return TaskModel(
       id: id ?? this.id,
       description: description ?? this.description,
       dateTime: dateTime ?? this.dateTime,
       finished: finished ?? this.finished,
+      userId: userId,
     );
   }
 
@@ -74,5 +83,6 @@ class TaskModel {
         'descricao': description,
         'data_hora': dateTime.toIso8601String(),
         'finalizado': finished ? 1 : 0,
+        'user_id': userId,
       };
 }

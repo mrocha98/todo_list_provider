@@ -8,18 +8,27 @@ class TasksRepositoryImpl implements TasksRepository {
   final SqliteConnectionFactory _sqliteConnectionFactory;
 
   @override
-  Future<void> save(DateTime dateTime, String description) async {
+  Future<void> save(
+    DateTime dateTime,
+    String description, {
+    String? userId,
+  }) async {
     final conn = await _sqliteConnectionFactory.openConnection();
     await conn.insert('todo', {
       'id': null,
       'descricao': description,
       'data_hora': dateTime.toIso8601String(),
       'finalizado': 0,
+      'user_id': userId,
     });
   }
 
   @override
-  Future<List<TaskModel>> findByPeriod(DateTime start, DateTime end) async {
+  Future<List<TaskModel>> findByPeriod(
+    DateTime start,
+    DateTime end, {
+    String? userId,
+  }) async {
     final startFilter = start.copyWith(
       hour: 0,
       minute: 0,
@@ -40,10 +49,12 @@ class TasksRepositoryImpl implements TasksRepository {
       '''
       SELECT *
       FROM todo
-      WHERE data_hora BETWEEN ? AND ?
+      WHERE
+        user_id = ? AND
+        data_hora BETWEEN ? AND ?
       ORDER BY data_hora
     ''',
-      [startFilter.toIso8601String(), endFilter.toIso8601String()],
+      [userId, startFilter.toIso8601String(), endFilter.toIso8601String()],
     );
 
     return result.map(TaskModel.fromSqlite).toList();

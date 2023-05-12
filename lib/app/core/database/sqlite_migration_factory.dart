@@ -8,7 +8,7 @@ class SqliteMigrationFactory {
 
   static SqliteMigrationFactory? _instance;
 
-  List<Migration> getCreateMigrations() => [MigrationV1()];
+  List<Migration> getCreateMigrations() => [MigrationV1(), MigrationV2()];
 
   List<Migration> getUpgradeMigrations(int oldVersion) =>
       getCreateMigrations().sublist(oldVersion);

@@ -11,7 +11,7 @@ class SqliteConnectionFactory {
 
   static SqliteConnectionFactory? _instance;
 
-  static const int _version = 1;
+  static const int _version = 2;
 
   static const String _databaseName = 'TODO_LIST_PROVIDER';
 
