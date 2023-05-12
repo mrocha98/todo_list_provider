@@ -1,6 +1,10 @@
 import 'package:provider/provider.dart';
+import 'package:todo_list_provider/app/core/database/sqlite_connection_factory.dart';
 import 'package:todo_list_provider/app/core/modules/module.dart';
+import 'package:todo_list_provider/app/modules/home/home_controller.dart';
 import 'package:todo_list_provider/app/modules/home/home_page.dart';
+import 'package:todo_list_provider/app/repositories/tasks/tasks.dart';
+import 'package:todo_list_provider/app/services/tasks/tasks.dart';
 
 class HomeModule extends Module {
   HomeModule()
@@ -9,8 +13,20 @@ class HomeModule extends Module {
             HomePage.routeName: (context) => const HomePage(),
           },
           bindings: [
-            Provider(
-              create: (_) => Object(),
+            Provider<TasksRepository>(
+              create: (context) => TasksRepositoryImpl(
+                context.read<SqliteConnectionFactory>(),
+              ),
+            ),
+            Provider<TasksService>(
+              create: (context) => TasksServiceImpl(
+                context.read<TasksRepository>(),
+              ),
+            ),
+            ChangeNotifierProvider(
+              create: (context) => HomeController(
+                context.read<TasksService>(),
+              ),
             ),
           ],
         );

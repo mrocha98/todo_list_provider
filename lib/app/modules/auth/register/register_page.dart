@@ -5,7 +5,6 @@ import 'package:todo_list_provider/app/core/ui/size_extensions.dart';
 import 'package:todo_list_provider/app/core/ui/theme_extensions.dart';
 import 'package:todo_list_provider/app/core/validators/validators.dart';
 import 'package:todo_list_provider/app/core/widgets/widgets.dart';
-import 'package:todo_list_provider/app/modules/auth/login/login_page.dart';
 import 'package:todo_list_provider/app/modules/auth/register/register_controller.dart';
 import 'package:validatorless/validatorless.dart';
 
@@ -30,13 +29,8 @@ class _RegisterPageState extends State<RegisterPage> {
   @override
   void initState() {
     super.initState();
-    DefaultListenerNotifier(
-      notifier: context.read<RegisterController>(),
-    ).listen(
-      context,
-      onSuccess: (_, __) =>
-          Navigator.of(context).pushReplacementNamed(LoginPage.routeName),
-    );
+    DefaultListenerNotifier(notifier: context.read<RegisterController>())
+        .listen(context);
   }
 
   @override

@@ -1,17 +1,39 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:todo_list_provider/app/core/notifiers/notifiers.dart';
 import 'package:todo_list_provider/app/core/ui/custom_icons.dart';
 import 'package:todo_list_provider/app/core/ui/theme_extensions.dart';
+import 'package:todo_list_provider/app/modules/home/home_controller.dart';
 import 'package:todo_list_provider/app/modules/home/widgets/widgets.dart';
 import 'package:todo_list_provider/app/modules/tasks/task_create_page.dart';
 import 'package:todo_list_provider/app/modules/tasks/tasks_module.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
   const HomePage({super.key});
 
   static const routeName = '/home';
 
-  void _gotoTaskCreate(BuildContext context) {
-    Navigator.of(context).push(
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  @override
+  void initState() {
+    super.initState();
+    final controller = context.read<HomeController>();
+    DefaultListenerNotifier(notifier: controller).listen(context);
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      controller
+        ..findTasks(filter: controller.filterSelected)
+        ..loadTotalTasks();
+    });
+  }
+
+  Future<void> _gotoTaskCreate(BuildContext context) async {
+    final controller = context.read<HomeController>();
+
+    await Navigator.of(context).push(
       PageRouteBuilder<dynamic>(
         pageBuilder: (context, animation, secondaryAnimation) =>
             TasksModule().getPage(
@@ -32,6 +54,8 @@ class HomePage extends StatelessWidget {
         },
       ),
     );
+
+    await controller.refreshPage();
   }
 
   @override
@@ -44,11 +68,16 @@ class HomePage extends StatelessWidget {
         actions: [
           PopupMenuButton(
             icon: const Icon(CustomIcons.filter),
-            itemBuilder: (_) => [
-              const PopupMenuItem<bool>(
-                child: Text('Mostrar tarefas concluídas'),
+            itemBuilder: (context) => [
+              PopupMenuItem<bool>(
+                value: context.read<HomeController>().showFinishedTasks,
+                child: context.read<HomeController>().showFinishedTasks
+                    ? const Text('Ocultrar tarefas concluídas')
+                    : const Text('Mostrar tarefas concluídas'),
               ),
             ],
+            onSelected: (_) =>
+                context.read<HomeController>().showOrHideFinishedTasks(),
           ),
         ],
       ),

@@ -21,7 +21,7 @@ class AuthProvider extends ChangeNotifier {
 
   void loadListeners() {
     _firebaseAuth.userChanges().listen((_) => notifyListeners());
-    _firebaseAuth.idTokenChanges().listen(
+    _firebaseAuth.authStateChanges().listen(
           (user) => CustomNavigator.to.pushNamedAndRemoveUntil(
             user != null ? HomePage.routeName : LoginPage.routeName,
             (_) => false,
