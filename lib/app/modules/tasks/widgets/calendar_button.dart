@@ -1,3 +1,4 @@
+import 'package:clock/clock.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
@@ -12,7 +13,7 @@ class CalendarButton extends StatelessWidget {
   Future<void> _handleTap(BuildContext context) async {
     final controller = context.read<TaskCreateController>();
     const tenYears = Duration(days: 365 * 10);
-    final now = DateTime.now();
+    final now = clock.now();
 
     final selectedDate = await showDatePicker(
       context: context,

@@ -1,3 +1,4 @@
+import 'package:clock/clock.dart';
 import 'package:date_picker_timeline/date_picker_timeline.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -26,7 +27,7 @@ class HomeWeekFilter extends StatelessWidget {
             height: 95,
             child: Selector<HomeController, DateTime>(
               selector: (context, controller) =>
-                  controller.initialDateOfWeek ?? DateTime.now(),
+                  controller.initialDateOfWeek ?? clock.now(),
               builder: (context, value, child) => DatePicker(
                 value,
                 locale: 'pt_BR',

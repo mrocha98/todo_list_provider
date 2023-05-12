@@ -1,3 +1,4 @@
+import 'package:clock/clock.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:todo_list_provider/app/models/models.dart';
 import 'package:todo_list_provider/app/repositories/tasks/tasks.dart';
@@ -20,15 +21,15 @@ class TasksServiceImpl implements TasksService {
   Future<List<TaskModel>> getTasksForToday() {
     final userId = _firebaseAuth.currentUser?.uid;
     return _tasksRepository.findByPeriod(
-      DateTime.now(),
-      DateTime.now(),
+      clock.now(),
+      clock.now(),
       userId: userId,
     );
   }
 
   @override
   Future<List<TaskModel>> getTasksForTomorrow() {
-    final tomorrowDate = DateTime.now().add(const Duration(days: 1));
+    final tomorrowDate = clock.now().add(const Duration(days: 1));
     final userId = _firebaseAuth.currentUser?.uid;
     return _tasksRepository.findByPeriod(
       tomorrowDate,
@@ -40,7 +41,7 @@ class TasksServiceImpl implements TasksService {
   @override
   Future<WeekTasksModel> getTasksForWeek() async {
     final userId = _firebaseAuth.currentUser?.uid;
-    final today = DateTime.now();
+    final today = clock.now();
     var startFilter =
         today.copyWith(hour: 0, minute: 0, millisecond: 0, microsecond: 0);
     if (startFilter.weekday != DateTime.monday) {
